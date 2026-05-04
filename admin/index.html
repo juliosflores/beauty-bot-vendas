@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="dark-theme">
@@ -25,7 +24,7 @@
                 </ul>
             </nav>
             <div class="sidebar-footer">
-                <p>POA & Região</p>
+                <p>Região Metropolitana POA</p>
             </div>
         </aside>
 
@@ -35,9 +34,20 @@
                     <i class="fas fa-search"></i>
                     <input type="text" id="search-input" placeholder="Buscar barbearia ou bairro...">
                 </div>
-                <div class="user-profile">
+                <div class="header-actions">
+                    <select id="city-filter" class="city-select">
+                        <option value="all">Todas as Cidades</option>
+                        <option value="Porto Alegre">Porto Alegre</option>
+                        <option value="Canoas">Canoas</option>
+                        <option value="Gravataí">Gravataí</option>
+                        <option value="Novo Hamburgo">Novo Hamburgo</option>
+                        <option value="São Leopoldo">São Leopoldo</option>
+                        <option value="Cachoeirinha">Cachoeirinha</option>
+                        <option value="Viamão">Viamão</option>
+                        <option value="Alvorada">Alvorada</option>
+                    </select>
                     <input type="file" id="import-input" accept=".json" style="display: none;">
-                    <button id="import-btn" class="btn-secondary" style="padding: 0.7rem 1.2rem; margin-right: 0.5rem;"><i class="fas fa-file-import"></i> Importar JSON</button>
+                    <button id="import-btn" class="btn-secondary-sm"><i class="fas fa-file-import"></i> Importar</button>
                     <button id="add-lead-btn" class="btn-primary"><i class="fas fa-plus"></i> Novo Lead</button>
                 </div>
             </header>
@@ -53,7 +63,7 @@
                 <div class="stat-card">
                     <div class="stat-icon gold"><i class="fas fa-clock"></i></div>
                     <div class="stat-info">
-                        <h3>Em Contato</h3>
+                        <h3>Contatados</h3>
                         <p id="contacted-leads">0</p>
                     </div>
                 </div>
@@ -72,6 +82,7 @@
                         <thead>
                             <tr>
                                 <th>Barbearia / Salão</th>
+                                <th>Cidade</th>
                                 <th>Bairro</th>
                                 <th>Status</th>
                                 <th>WhatsApp</th>
@@ -79,7 +90,6 @@
                             </tr>
                         </thead>
                         <tbody id="leads-body">
-                            <!-- Leads will be injected here -->
                         </tbody>
                     </table>
                 </div>
@@ -87,7 +97,7 @@
         </main>
     </div>
 
-    <!-- Modal for adding lead -->
+    <!-- Modal -->
     <div id="lead-modal" class="modal">
         <div class="modal-content glass">
             <span class="close-modal">&times;</span>
@@ -98,7 +108,11 @@
                     <input type="text" id="name" required placeholder="Ex: Barbearia do Centro">
                 </div>
                 <div class="form-group">
-                    <label>Bairro (Porto Alegre/Região)</label>
+                    <label>Cidade</label>
+                    <input type="text" id="city" required placeholder="Ex: Porto Alegre" value="Porto Alegre">
+                </div>
+                <div class="form-group">
+                    <label>Bairro</label>
                     <input type="text" id="neighborhood" required placeholder="Ex: Cidade Baixa">
                 </div>
                 <div class="form-group">
@@ -109,8 +123,9 @@
                     <label>Status</label>
                     <select id="status">
                         <option value="lead">Lead (Novo)</option>
-                        <option value="contacted">Em Contato</option>
+                        <option value="contacted">Contatado</option>
                         <option value="customer">Cliente Ativo</option>
+                        <option value="rejected">Recusou</option>
                     </select>
                 </div>
                 <button type="submit" class="btn-primary-large">Salvar Lead</button>
