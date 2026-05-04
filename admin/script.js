@@ -24,9 +24,43 @@ let leads = JSON.parse(localStorage.getItem('beautybot_leads')) || [
 const leadsBody = document.getElementById('leads-body');
 const leadForm = document.getElementById('lead-form');
 const addLeadBtn = document.getElementById('add-lead-btn');
+const importBtn = document.getElementById('import-btn');
+const importInput = document.getElementById('import-input');
 const modal = document.getElementById('lead-modal');
 const closeModal = document.querySelector('.close-modal');
 const searchInput = document.getElementById('search-input');
+
+// Import Logic
+importBtn.onclick = () => importInput.click();
+
+importInput.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        try {
+            const importedLeads = JSON.parse(event.target.result);
+            // Assign new IDs and merge
+            const startId = Date.now();
+            const formattedLeads = importedLeads.map((l, index) => ({
+                id: startId + index,
+                name: l.name,
+                neighborhood: l.neighborhood,
+                whatsapp: l.whatsapp.replace(/\D/g, ''),
+                status: 'lead'
+            }));
+
+            leads = [...leads, ...formattedLeads];
+            localStorage.setItem('beautybot_leads', JSON.stringify(leads));
+            renderLeads();
+            alert(`${formattedLeads.length} leads importados com sucesso!`);
+        } catch (err) {
+            alert('Erro ao ler o arquivo JSON. Verifique o formato.');
+        }
+    };
+    reader.readAsText(file);
+};
 
 // Render Table
 function renderLeads(data = leads) {
