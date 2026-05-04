@@ -16,7 +16,7 @@ async function loadLeads() {
 
     // Senao, carrega o JSON do servidor (749 leads extraidos do Google Maps)
     try {
-        const response = await fetch('../leads_extraidos.json');
+        const response = await fetch('../leads_com_telefone.json');
         const data = await response.json();
         leads = data.map((item, index) => ({
             id: index + 1,
