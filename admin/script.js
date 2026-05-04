@@ -1,87 +1,41 @@
 // ============================================
-// BASE DE DADOS - BARBEARIAS E SALÕES DA REGIÃO METROPOLITANA DE POA
+// BASE DE DADOS - CARREGA DO SERVIDOR + LOCALSTORAGE
 // ============================================
-let leads = JSON.parse(localStorage.getItem('beautybot_leads')) || [
+let leads = [];
+let dataLoaded = false;
 
-    // ===================== PORTO ALEGRE =====================
-    { id: 1,  name: 'Velho Tranquilo Barbearia', city: 'Porto Alegre', neighborhood: 'Moinhos de Vento', status: 'lead', whatsapp: '5135082205' },
-    { id: 2,  name: 'Velho Tranquilo (Três Figueiras)', city: 'Porto Alegre', neighborhood: 'Três Figueiras', status: 'lead', whatsapp: '5132766150' },
-    { id: 3,  name: 'La Mafia Barbearia', city: 'Porto Alegre', neighborhood: 'Petrópolis', status: 'lead', whatsapp: '5137378171' },
-    { id: 4,  name: 'La Mafia Barbearia', city: 'Porto Alegre', neighborhood: 'Cristal', status: 'lead', whatsapp: '5130284889' },
-    { id: 5,  name: 'La Mafia Barbearia', city: 'Porto Alegre', neighborhood: 'Centro Histórico', status: 'lead', whatsapp: '5130720154' },
-    { id: 6,  name: 'La Mafia Barbearia', city: 'Porto Alegre', neighborhood: 'Cidade Baixa', status: 'lead', whatsapp: '5133779761' },
-    { id: 7,  name: 'La Mafia Barbearia', city: 'Porto Alegre', neighborhood: 'Bom Fim', status: 'lead', whatsapp: '5132731105' },
-    { id: 8,  name: 'Veterano Barbearia', city: 'Porto Alegre', neighborhood: 'Cidade Baixa', status: 'lead', whatsapp: '5130626303' },
-    { id: 9,  name: 'Barbearia Lacorte', city: 'Porto Alegre', neighborhood: 'Auxiliadora', status: 'lead', whatsapp: '51982216777' },
-    { id: 10, name: 'Barbearia Souza', city: 'Porto Alegre', neighborhood: 'Cavalhada', status: 'lead', whatsapp: '5132471316' },
-    { id: 11, name: 'Cabelo Curto (Bom Fim)', city: 'Porto Alegre', neighborhood: 'Bom Fim', status: 'lead', whatsapp: '51999999999' },
-    { id: 12, name: 'Barbosa Cabeleireiros', city: 'Porto Alegre', neighborhood: 'São Geraldo', status: 'lead', whatsapp: '5132220373' },
-    { id: 13, name: 'Amilton Cabeleireiros', city: 'Porto Alegre', neighborhood: 'Cidade Baixa', status: 'lead', whatsapp: '5132214889' },
-    { id: 14, name: 'Barbeiro de Sevilha', city: 'Porto Alegre', neighborhood: 'Cristal', status: 'lead', whatsapp: '5132579707' },
-    { id: 15, name: 'Barbearia Carrara', city: 'Porto Alegre', neighborhood: 'Menino Deus', status: 'lead', whatsapp: '51999999999' },
-    { id: 16, name: 'Farsi La Barba', city: 'Porto Alegre', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
-    { id: 17, name: 'Barbearia Art of Life', city: 'Porto Alegre', neighborhood: 'Protásio Alves', status: 'lead', whatsapp: '51999999999' },
-    { id: 18, name: 'Thompson and Hill Barbershop', city: 'Porto Alegre', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
+async function loadLeads() {
+    // Se ja tem dados salvos localmente (usuario ja usou o painel), usa esses
+    const saved = localStorage.getItem('beautybot_leads');
+    if (saved) {
+        leads = JSON.parse(saved);
+        dataLoaded = true;
+        renderLeads();
+        return;
+    }
 
-    // SALÕES POA - ZONA NORTE
-    { id: 19, name: 'Espaço Platinum', city: 'Porto Alegre', neighborhood: 'Rubem Berta', status: 'lead', whatsapp: '51989320848' },
-    { id: 20, name: 'Estética Estrela', city: 'Porto Alegre', neighborhood: 'Rubem Berta', status: 'lead', whatsapp: '51985888493' },
-    { id: 21, name: 'Salão da Bel (CenterLar)', city: 'Porto Alegre', neighborhood: 'Sarandi', status: 'lead', whatsapp: '51996895169' },
-    { id: 22, name: 'Salão Margha Mendes', city: 'Porto Alegre', neighborhood: 'Sarandi', status: 'lead', whatsapp: '51991550198' },
-    { id: 23, name: 'Cia da Beleza', city: 'Porto Alegre', neighborhood: 'Sarandi', status: 'lead', whatsapp: '5133659603' },
-    { id: 24, name: 'Estética Aline Beauty', city: 'Porto Alegre', neighborhood: 'Sarandi', status: 'lead', whatsapp: '5130442111' },
-    { id: 25, name: 'Salão Eco Beauty', city: 'Porto Alegre', neighborhood: 'Sarandi', status: 'lead', whatsapp: '5133442272' },
-
-    // ===================== CANOAS =====================
-    { id: 26, name: 'La Mafia Barbearia', city: 'Canoas', neighborhood: 'Centro', status: 'lead', whatsapp: '51995800777' },
-    { id: 27, name: 'La Mafia Barbearia', city: 'Canoas', neighborhood: 'Moinhos de Vento', status: 'lead', whatsapp: '51997110777' },
-    { id: 28, name: 'Mattos Barbearia', city: 'Canoas', neighborhood: 'Niterói', status: 'lead', whatsapp: '51993149567' },
-    { id: 29, name: 'Le Classique Barber & Club', city: 'Canoas', neighborhood: 'Marechal Rondon', status: 'lead', whatsapp: '51999999999' },
-    { id: 30, name: 'Barbearia Leo Barber', city: 'Canoas', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
-    { id: 31, name: 'Barbearia Tex 66', city: 'Canoas', neighborhood: 'Mathias Velho', status: 'lead', whatsapp: '51989308684' },
-
-    // ===================== GRAVATAÍ =====================
-    { id: 32, name: 'La Mafia Barbearia', city: 'Gravataí', neighborhood: 'Centro', status: 'lead', whatsapp: '5131283347' },
-    { id: 33, name: 'Barbearia Home 83', city: 'Gravataí', neighborhood: 'Centro', status: 'lead', whatsapp: '51982868020' },
-    { id: 34, name: 'Barbearia Edimilson', city: 'Gravataí', neighborhood: 'Salgado Filho', status: 'lead', whatsapp: '51991718691' },
-    { id: 35, name: 'Alex Tavares Barbearia', city: 'Gravataí', neighborhood: 'Vera Cruz', status: 'lead', whatsapp: '51998658887' },
-    { id: 36, name: 'Barba D\'oro Barbearia', city: 'Gravataí', neighborhood: 'Vera Cruz', status: 'lead', whatsapp: '51985859686' },
-    { id: 37, name: 'Barbados Barbershop', city: 'Gravataí', neighborhood: 'São Jerônimo', status: 'lead', whatsapp: '51991429568' },
-    { id: 38, name: 'Pedro Barber Studio', city: 'Gravataí', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
-
-    // ===================== NOVO HAMBURGO =====================
-    { id: 39, name: 'OITO Barbearia (Primavera)', city: 'Novo Hamburgo', neighborhood: 'Primavera', status: 'lead', whatsapp: '51993380247' },
-    { id: 40, name: 'OITO Barbearia (H. Velho)', city: 'Novo Hamburgo', neighborhood: 'Hamburgo Velho', status: 'lead', whatsapp: '51990149080' },
-    { id: 41, name: 'La Mafia Barbearia', city: 'Novo Hamburgo', neighborhood: 'Centro', status: 'lead', whatsapp: '5132799540' },
-    { id: 42, name: 'João Barber', city: 'Novo Hamburgo', neighborhood: 'Pátria Nova', status: 'lead', whatsapp: '51996963921' },
-    { id: 43, name: 'D\' Castro Barbearia', city: 'Novo Hamburgo', neighborhood: 'São José', status: 'lead', whatsapp: '51997484024' },
-    { id: 44, name: 'Oficina do Bigode', city: 'Novo Hamburgo', neighborhood: 'Operário', status: 'lead', whatsapp: '51996945871' },
-    { id: 45, name: 'Complex Barbearia', city: 'Novo Hamburgo', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
-    { id: 46, name: 'Barbearia Cadillac', city: 'Novo Hamburgo', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
-    { id: 47, name: 'Los Pepes Barbearia', city: 'Novo Hamburgo', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
-
-    // ===================== SÃO LEOPOLDO =====================
-    { id: 48, name: 'La Mafia Barbearia', city: 'São Leopoldo', neighborhood: 'Centro', status: 'lead', whatsapp: '5137833393' },
-    { id: 49, name: 'Hair Box Barber', city: 'São Leopoldo', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
-    { id: 50, name: 'Barbearia Kairos', city: 'São Leopoldo', neighborhood: 'Scharlau', status: 'lead', whatsapp: '51999999999' },
-
-    // ===================== CACHOEIRINHA =====================
-    { id: 51, name: 'Barbearia Premium', city: 'Cachoeirinha', neighborhood: 'Centro', status: 'lead', whatsapp: '51991093322' },
-    { id: 52, name: 'Mas Que Barba! Barbearia', city: 'Cachoeirinha', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
-    { id: 53, name: 'Club 23 Barber', city: 'Cachoeirinha', neighborhood: 'Vila Eunice Nova', status: 'lead', whatsapp: '51999999999' },
-    { id: 54, name: 'Barbearia Champions', city: 'Cachoeirinha', neighborhood: 'Vila Imbui', status: 'lead', whatsapp: '51999999999' },
-    { id: 55, name: 'Barbearia Robson Rios', city: 'Cachoeirinha', neighborhood: 'Parque Mal. Rondon', status: 'lead', whatsapp: '51982849594' },
-
-    // ===================== VIAMÃO =====================
-    { id: 56, name: 'Barbearia Marujo', city: 'Viamão', neighborhood: 'Centro', status: 'lead', whatsapp: '51999999999' },
-    { id: 57, name: 'Barba Barbearia', city: 'Viamão', neighborhood: 'Centro', status: 'lead', whatsapp: '51991475804' },
-    { id: 58, name: 'Cabral Barbearia', city: 'Viamão', neighborhood: 'Centro', status: 'lead', whatsapp: '51991961171' },
-    { id: 59, name: 'Haus Barber Co.', city: 'Viamão', neighborhood: 'Centro', status: 'lead', whatsapp: '51985151519' },
-
-    // ===================== ALVORADA =====================
-    { id: 60, name: 'Casino\'s Club Barbearia', city: 'Alvorada', neighborhood: 'Aparecida', status: 'lead', whatsapp: '51999999999' },
-    { id: 61, name: 'Luciano Barber Club', city: 'Alvorada', neighborhood: 'Passo do Feijó', status: 'lead', whatsapp: '51999999999' },
-];
+    // Senao, carrega o JSON do servidor (749 leads extraidos do Google Maps)
+    try {
+        const response = await fetch('../leads_extraidos.json');
+        const data = await response.json();
+        leads = data.map((item, index) => ({
+            id: index + 1,
+            name: item.name,
+            city: item.city || 'Desconhecida',
+            neighborhood: item.neighborhood || item.city || '-',
+            whatsapp: item.whatsapp || 'sem_numero',
+            status: 'lead'
+        }));
+        localStorage.setItem('beautybot_leads', JSON.stringify(leads));
+        dataLoaded = true;
+        renderLeads();
+        console.log(`${leads.length} leads carregados do servidor!`);
+    } catch (err) {
+        console.error('Erro ao carregar leads:', err);
+        leads = [];
+        renderLeads();
+    }
+}
 
 // ============================================
 // ELEMENTS
@@ -257,6 +211,6 @@ searchInput.oninput = applyFilters;
 if (cityFilter) cityFilter.onchange = applyFilters;
 
 // ============================================
-// INITIAL RENDER
+// INITIAL LOAD
 // ============================================
-renderLeads();
+loadLeads();
