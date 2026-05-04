@@ -49,6 +49,19 @@ const modal = document.getElementById('lead-modal');
 const closeModal = document.querySelector('.close-modal');
 const searchInput = document.getElementById('search-input');
 const cityFilter = document.getElementById('city-filter');
+const resetBtn = document.getElementById('reset-btn');
+
+// ============================================
+// RESET LOGIC - Limpa cache e recarrega do servidor
+// ============================================
+if (resetBtn) {
+    resetBtn.onclick = () => {
+        if (confirm('Isso vai recarregar todos os leads do servidor. Suas alteracoes de status serao perdidas. Continuar?')) {
+            localStorage.removeItem('beautybot_leads');
+            location.reload();
+        }
+    };
+}
 
 // ============================================
 // IMPORT LOGIC
