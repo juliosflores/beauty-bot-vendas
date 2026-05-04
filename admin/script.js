@@ -1,9 +1,23 @@
 // Initial Data (Simulated)
 let leads = JSON.parse(localStorage.getItem('beautybot_leads')) || [
-    { id: 1, name: 'Barbearia do Moinhos', neighborhood: 'Moinhos de Vento', status: 'customer', whatsapp: '51991234567' },
-    { id: 2, name: 'Corte & Estilo', neighborhood: 'Cidade Baixa', status: 'lead', whatsapp: '51988887777' },
-    { id: 3, name: 'Salão da Praça', neighborhood: 'Petrópolis', status: 'contacted', whatsapp: '51977776666' },
-    { id: 4, name: 'Barber Shop Canoas', neighborhood: 'Canoas', status: 'lead', whatsapp: '51966665555' }
+    // PORTO ALEGRE
+    { id: 1, name: 'Velho Tranquilo Barbearia', neighborhood: 'Moinhos de Vento', status: 'lead', whatsapp: '5135082205' },
+    { id: 2, name: 'La Mafia Social Club', neighborhood: 'Petrópolis', status: 'lead', whatsapp: '5137378171' },
+    { id: 3, name: 'Santa Barba Barbearia', neighborhood: 'Moinhos de Vento', status: 'lead', whatsapp: '51999999999' },
+    { id: 4, name: 'Barbearia Lacorte', neighborhood: 'Auxiliadora', status: 'lead', whatsapp: '51982216777' },
+    // CANOAS
+    { id: 5, name: 'La Mafia Canoas', neighborhood: 'Centro', status: 'lead', whatsapp: '51995800777' },
+    { id: 6, name: 'Mattos Barbearia', neighborhood: 'Niterói', status: 'lead', whatsapp: '51993149567' },
+    { id: 7, name: 'Le Classique Barber', neighborhood: 'Marechal Rondon', status: 'lead', whatsapp: '51999998888' },
+    // GRAVATAÍ
+    { id: 8, name: 'Barbearia Home 83', neighborhood: 'Centro', status: 'lead', whatsapp: '51982868020' },
+    { id: 9, name: 'Barbearia Edimilson', neighborhood: 'Salgado Filho', status: 'lead', whatsapp: '51991718691' },
+    { id: 10, name: 'La Mafia Gravataí', neighborhood: 'Centro', status: 'lead', whatsapp: '5130720154' },
+    // NOVO HAMBURGO
+    { id: 11, name: 'OITO Barbearia', neighborhood: 'Hamburgo Velho', status: 'lead', whatsapp: '51990149080' },
+    { id: 12, name: 'D\' Castro Barbearia', neighborhood: 'São José', status: 'lead', whatsapp: '51997484024' },
+    { id: 13, name: 'Oficina do Bigode', neighborhood: 'Operário', status: 'lead', whatsapp: '51996945871' },
+    { id: 14, name: 'Barbearia Souza', neighborhood: 'Cavalhada (POA)', status: 'lead', whatsapp: '5132471316' }
 ];
 
 // Elements
